@@ -1,0 +1,15 @@
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://zebra-puzzle-solver.mantiscrab.pl/types"
+        targetNamespace="http://zebra-puzzle-solver.mantiscrab.pl/types">
+
+    <include schemaLocation="ZebraPuzzleSolverCommon.xsd"/>
+
+    <element name="solveZebraPuzzleRequest" type="tns:SolveZebraPuzzleRequest"/>
+
+    <complexType name="SolveZebraPuzzleRequest">
+        <sequence>
+            <element name="dimension" type="tns:Dimension" minOccurs="3" maxOccurs="unbounded"/>
+            <element name="constraint" type="tns:Constraint" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+</schema>

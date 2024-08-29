@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<wsdl:definitions xmlns:dom="http://zebra-puzzle-solver.mantiscrab.pl/types"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://zebra-puzzle-solver.mantiscrab.pl/api/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://zebra-puzzle-solver.mantiscrab.pl/api/">
+
+    <wsdl:import location="types/ZebraPuzzleSolverSchema.xsd" namespace="http://zebra-puzzle-solver.mantiscrab.pl/types"/>
+
+    <wsdl:message name="SolveZebraPuzzleRequest">
+        <wsdl:part name="SolveZebraPuzzleRequest" element="dom:solveZebraPuzzleRequest"/>
+    </wsdl:message>
+    <wsdl:message name="SolveZebraPuzzleResponse">
+        <wsdl:part name="SolveZebraPuzzleResponse" element="dom:solveZebraPuzzleResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="ZebraPuzzleSolverPortType">
+        <wsdl:operation name="SolveZebraPuzzle">
+            <wsdl:input message="tns:SolveZebraPuzzleRequest"/>
+            <wsdl:output message="tns:SolveZebraPuzzleResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="ZebraPuzzleSolverBinding" type="tns:ZebraPuzzleSolverPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="SolveZebraPuzzle">
+            <soap:operation style="document" soapAction="http://zebra-puzzle-solver.mantiscrab.pl/SolveZebraPuzzle"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ZebraPuzzleSolverService">
+        <wsdl:port name="ZebraPuzzleSolverPort" binding="tns:ZebraPuzzleSolverBinding">
+            <soap:address location="http://zebra-puzzle-solver.mantiscrab.pl/api/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

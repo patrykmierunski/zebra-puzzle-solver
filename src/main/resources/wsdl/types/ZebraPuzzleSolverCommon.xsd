@@ -1,0 +1,51 @@
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://zebra-puzzle-solver.mantiscrab.pl/types"
+        targetNamespace="http://zebra-puzzle-solver.mantiscrab.pl/types">
+
+    <complexType name="Attribute">
+        <sequence>
+            <element name="dimensionName" type="tns:DimensionName"/>
+            <element name="attributeName" type="tns:AttributeName"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="AttributeName">
+        <sequence>
+            <element name="name" type="string"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="Constraint">
+        <sequence>
+            <element name="firstAttribute" type="tns:AttributeName"/>
+            <element name="secondAttribute" type="tns:AttributeName"/>
+            <element name="constraintType" type="tns:ConstraintType"/>
+        </sequence>
+    </complexType>
+
+    <simpleType name="ConstraintType">
+        <restriction base="string">
+            <enumeration value="is"/>
+            <enumeration value="isNot"/>
+        </restriction>
+    </simpleType>
+
+    <complexType name="DimensionName">
+        <sequence>
+            <element name="name" type="string"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="Dimension">
+        <sequence>
+            <element name="name" type="tns:DimensionName"/>
+            <element name="attributeName" type="tns:AttributeName" minOccurs="3" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="Solution">
+        <sequence>
+            <element name="attributeOfDimension" type="tns:Attribute" minOccurs="3"/>
+        </sequence>
+    </complexType>
+</schema>

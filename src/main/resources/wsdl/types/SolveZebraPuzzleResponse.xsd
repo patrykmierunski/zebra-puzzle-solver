@@ -1,0 +1,13 @@
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://zebra-puzzle-solver.mantiscrab.pl/types"
+        targetNamespace="http://zebra-puzzle-solver.mantiscrab.pl/types">
+
+    <include schemaLocation="ZebraPuzzleSolverCommon.xsd"/>
+
+    <element name="solveZebraPuzzleResponse" type="tns:SolveZebraPuzzleResponse"/>
+    <complexType name="SolveZebraPuzzleResponse">
+        <sequence>
+            <element name="solutions" type="tns:Solution" minOccurs="3"/>
+        </sequence>
+    </complexType>
+</schema>

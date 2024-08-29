@@ -1,0 +1,5 @@
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://zebra-puzzle-solver.mantiscrab.pl/types">
+    <include schemaLocation="SolveZebraPuzzleRequest.xsd"/>
+    <include schemaLocation="SolveZebraPuzzleResponse.xsd"/>
+</schema>
