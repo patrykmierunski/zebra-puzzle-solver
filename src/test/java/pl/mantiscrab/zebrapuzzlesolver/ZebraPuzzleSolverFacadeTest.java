@@ -2,54 +2,69 @@ package pl.mantiscrab.zebrapuzzlesolver;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import pl.mantiscrab.zebrapuzzlesolver.dto.ConstraintDto;
+import pl.mantiscrab.zebrapuzzlesolver.dto.DimensionDto;
+import pl.mantiscrab.zebrapuzzlesolver.dto.SolutionDto;
 
 import java.util.List;
-import java.util.Set;
-
-import static pl.mantiscrab.zebrapuzzlesolver.Constraint.is;
-import static pl.mantiscrab.zebrapuzzlesolver.Constraint.isNot;
+import java.util.Map;
 
 class ZebraPuzzleSolverFacadeTest {
 
     @Test
     void shouldSolvePuzzle() {
         //given
-        Dimension names = Dimension.builder().name("names").attributes("Margaret", "Otis", "Bobbie", "Hersh", "Angie").build();
-        Dimension cities = Dimension.builder().name("cities").attributes("Vermont", "Ohio", "Oregon", "Louisiana", "Arizona").build();
-        Dimension food = Dimension.builder().name("food").attributes("cherry", "duck", "lamb", "chocolate", "bread").build();
-        Dimension job = Dimension.builder().name("job").attributes("engineer", "botanist", "scientist", "doctor", "farmer").build();
+        DimensionDto names = DimensionDto.builder().dimensionName("names").attributeNames(List.of("Margaret", "Otis", "Bobbie", "Hersh", "Angie")).build();
+        DimensionDto cities = DimensionDto.builder().dimensionName("cities").attributeNames(List.of("Vermont", "Ohio", "Oregon", "Louisiana", "Arizona")).build();
+        DimensionDto food = DimensionDto.builder().dimensionName("food").attributeNames(List.of("cherry", "duck", "lamb", "chocolate", "bread")).build();
+        DimensionDto job = DimensionDto.builder().dimensionName("job").attributeNames(List.of("engineer", "botanist", "scientist", "doctor", "farmer")).build();
 
-        List<Dimension> dimensions = List.of(names, cities, food, job);
-        List<Constraint> constraints = List.of(
-                is(cities.attribute("Vermont"), food.attribute("cherry")),        //+
-                isNot(cities.attribute("Vermont"), names.attribute("Margaret")),  //+
-                isNot(cities.attribute("Vermont"), names.attribute("Otis")),      //+
-                isNot(food.attribute("cherry"), names.attribute("Margaret")),     //+
-                isNot(food.attribute("cherry"), names.attribute("Otis")),         //+
-                is(food.attribute("duck"), job.attribute("engineer")),            //+
-                isNot(food.attribute("duck"), names.attribute("Bobbie")),         //+
-                isNot(job.attribute("engineer"), names.attribute("Bobbie")),      //+
-                is(names.attribute("Bobbie"), cities.attribute("Ohio")),          //+
-                isNot(job.attribute("botanist"), names.attribute("Hersh")),       //+
-                isNot(job.attribute("botanist"), names.attribute("Angie")),       //+
-                is(food.attribute("lamb"), job.attribute("scientist")),           //+
-                isNot(food.attribute("chocolate"), cities.attribute("Louisiana")),//+
-                is(names.attribute("Angie"), cities.attribute("Arizona")),        //+
-                isNot(names.attribute("Angie"), job.attribute("engineer")),       //+
-                is(names.attribute("Margaret"), job.attribute("doctor")),         //+
-                isNot(names.attribute("Margaret"), cities.attribute("Oregon")),   //+
-                isNot(job.attribute("farmer"), food.attribute("bread")));         //+
+        List<DimensionDto> dimensions = List.of(names, cities, food, job);
+        List<ConstraintDto> constraints = List.of(
+                cities.attribute("Vermont").is(food.attribute("cherry")),        //+
+                cities.attribute("Vermont").isNot(names.attribute("Margaret")),  //+
+                cities.attribute("Vermont").isNot(names.attribute("Otis")),      //+
+                food.attribute("cherry").isNot(names.attribute("Margaret")),     //+
+                food.attribute("cherry").isNot(names.attribute("Otis")),         //+
+                food.attribute("duck").is(job.attribute("engineer")),            //+
+                food.attribute("duck").isNot(names.attribute("Bobbie")),         //+
+                job.attribute("engineer").isNot(names.attribute("Bobbie")),      //+
+                names.attribute("Bobbie").is(cities.attribute("Ohio")),          //+
+                job.attribute("botanist").isNot(names.attribute("Hersh")),       //+
+                job.attribute("botanist").isNot(names.attribute("Angie")),       //+
+                food.attribute("lamb").is(job.attribute("scientist")),           //+
+                food.attribute("chocolate").isNot(cities.attribute("Louisiana")),//+
+                names.attribute("Angie").is(cities.attribute("Arizona")),        //+
+                names.attribute("Angie").isNot(job.attribute("engineer")),       //+
+                names.attribute("Margaret").is(job.attribute("doctor")),         //+
+                names.attribute("Margaret").isNot(cities.attribute("Oregon")),   //+
+                job.attribute("farmer").isNot(food.attribute("bread")));         //+
 
         //when
-        List<Solution> solutions = ZebraPuzzleSolverFacade.solve(dimensions, constraints);
+        List<SolutionDto> solutions = ZebraPuzzleSolverFacade.solve(dimensions, constraints);
 
         //then
         Assertions.assertTrue(solutions.containsAll(List.of(
-                Solution.of(Set.of(cities.attribute("Vermont"), job.attribute("farmer"), names.attribute("Hersh"), food.attribute("cherry"))),
-                Solution.of(Set.of(cities.attribute("Ohio"), job.attribute("botanist"), names.attribute("Bobbie"), food.attribute("chocolate"))),
-                Solution.of(Set.of(cities.attribute("Louisiana"), job.attribute("doctor"), names.attribute("Margaret"), food.attribute("bread"))),
-                Solution.of(Set.of(cities.attribute("Arizona"), job.attribute("scientist"), names.attribute("Angie"), food.attribute("lamb"))),
-                Solution.of(Set.of(cities.attribute("Oregon"), job.attribute("engineer"), names.attribute("Otis"), food.attribute("duck"))))));
+                new SolutionDto(Map.of(cities.getDimensionName(), cities.attribute("Vermont"),
+                        job.getDimensionName(), job.attribute("farmer"),
+                        names.getDimensionName(), names.attribute("Hersh"),
+                        food.getDimensionName(), food.attribute("cherry"))),
+                new SolutionDto(Map.of(cities.getDimensionName(), cities.attribute("Ohio"),
+                        job.getDimensionName(), job.attribute("botanist"),
+                        names.getDimensionName(), names.attribute("Bobbie"),
+                        food.getDimensionName(), food.attribute("chocolate"))),
+                new SolutionDto(Map.of(cities.getDimensionName(), cities.attribute("Louisiana"),
+                        job.getDimensionName(), job.attribute("doctor"),
+                        names.getDimensionName(), names.attribute("Margaret"),
+                        food.getDimensionName(), food.attribute("bread"))),
+                new SolutionDto(Map.of(cities.getDimensionName(), cities.attribute("Arizona"),
+                        job.getDimensionName(), job.attribute("scientist"),
+                        names.getDimensionName(), names.attribute("Angie"),
+                        food.getDimensionName(), food.attribute("lamb"))),
+                new SolutionDto(Map.of(cities.getDimensionName(), cities.attribute("Oregon"),
+                        job.getDimensionName(), job.attribute("engineer"),
+                        names.getDimensionName(), names.attribute("Otis"),
+                        food.getDimensionName(), food.attribute("duck"))))));
         Assertions.assertEquals(5, solutions.size());
     }
 }
