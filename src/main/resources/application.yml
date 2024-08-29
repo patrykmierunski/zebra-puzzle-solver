@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: zebra-puzzle-solver
+server:
+  servlet:
+    context-path: /
