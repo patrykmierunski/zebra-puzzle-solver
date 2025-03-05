@@ -3,12 +3,12 @@ package pl.mantiscrab.zebrapuzzlesolver;
 import java.util.*;
 import java.util.stream.Collectors;
 
-class Dimension implements Comparable<Dimension> {
+public class Dimension implements Comparable<Dimension> {
 
     private final DimensionName name;
     private final Set<Attribute> attributes;
 
-    private Dimension(DimensionName name, Set<Attribute> attributes) {
+    protected Dimension(DimensionName name, Set<Attribute> attributes) {
         this.name = Objects.requireNonNull(name);
         this.attributes = Collections.unmodifiableSet(attributes);
     }
@@ -44,7 +44,7 @@ class Dimension implements Comparable<Dimension> {
         return new Dimension.Builder();
     }
 
-    static class Builder {
+    public static class Builder {
         private DimensionName name;
         private String[] attributeNames;
 

@@ -41,7 +41,7 @@ class ZebraPuzzleSolverFacadeTest {
                 job.attribute("farmer").isNot(food.attribute("bread")));         //+
 
         //when
-        List<SolutionDto> solutions = ZebraPuzzleSolverFacade.solve(dimensions, constraints);
+        List<SolutionDto> solutions = new ZebraPuzzleSolverFacade().solve(dimensions, constraints);
 
         //then
         Assertions.assertTrue(solutions.containsAll(List.of(

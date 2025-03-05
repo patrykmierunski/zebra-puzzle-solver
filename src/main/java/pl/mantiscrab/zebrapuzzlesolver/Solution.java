@@ -7,12 +7,16 @@ import java.util.Set;
 class Solution {
     private final Set<Dimension.Attribute> attributes;
 
-    private Solution(Set<Dimension.Attribute> attributes) {
+    protected Solution(Set<Dimension.Attribute> attributes) {
         this.attributes = Collections.unmodifiableSet(attributes);
     }
 
     static Solution of(Set<Dimension.Attribute> attributes) {
         return new Solution(attributes);
+    }
+
+    public Set<Dimension.Attribute> getAttributes() {
+        return attributes;
     }
 
     @Override
