@@ -1,12 +1,17 @@
 package pl.mantiscrab.zebrapuzzlesolver.dto;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import java.util.Collections;
-import java.util.Map;
+import java.util.Set;
 
+@EqualsAndHashCode
+@ToString
 public class SolutionDto {
-    private final Map<DimensionNameDto, AttributeNameDto> solution;
+    private final Set<AttributeDto> solution;
 
-    public SolutionDto(Map<DimensionNameDto, AttributeNameDto> solution) {
-        this.solution = Collections.unmodifiableMap(solution);
+    public SolutionDto(Set<AttributeDto> solution) {
+        this.solution = Collections.unmodifiableSet(solution);
     }
 }

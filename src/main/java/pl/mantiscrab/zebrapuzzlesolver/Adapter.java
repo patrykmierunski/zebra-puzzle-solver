@@ -16,38 +16,54 @@ public abstract class Adapter {
 
     abstract AttributeName map(AttributeNameDto attributeNameDto);
 
-    abstract ConstraintDto map(Constraint constraint);
+    boolean map(ConstraintType constraintType) {
+        return constraintType.equals(ConstraintType.IS);
+    }
 
+    @Mapping(target = "constraintType", source = "constraint")
     abstract Constraint map(ConstraintDto constraintDto);
 
-    abstract CoordinateDto map(Coordinate coordinate);
+    ConstraintType map(boolean isConstraint) {
+        return isConstraint ? ConstraintType.IS : ConstraintType.IS_NOT;
+    }
 
     abstract Coordinate map(CoordinateDto coordinateDto);
 
-    abstract DimensionDto map(Dimension dimension);
-
-    abstract String mapToString(DimensionName dimensionName);
+    String mapToString(DimensionName dimensionName) {
+        return dimensionName.name();
+    }
 
     abstract List<AttributeNameDto> map(Set<Dimension.Attribute> attributes);
 
     @Mapping(target = "name", source = "dimensionName")
+    @Mapping(target = "attributes", source = "attributeNames")
     abstract Dimension map(DimensionDto dimensionDto);
 
+    abstract String[] map(List<AttributeNameDto> attributeNames);
+
+    String mapToString(AttributeNameDto value) {
+        return value.getAttributeName();
+    }
+
+    @Mapping(target = "dimensionName", source = "name")
     abstract DimensionNameDto map(DimensionName dimensionName);
 
+    @Mapping(target = "name", source = "dimensionName")
     abstract DimensionName map(DimensionNameDto dimensionNameDto);
 
     abstract List<Dimension> mapDimensions(List<DimensionDto> dimensions);
-
-    abstract List<Constraint> mapConstraints(List<ConstraintDto> constraints);
 
     abstract List<SolutionDto> mapSolutions(List<Solution> solutions);
 
     SolutionDto mapSolution(Solution solution) {
         Map<DimensionNameDto, AttributeNameDto> collect = solution.getAttributes().stream()
                 .collect(Collectors.toMap(
-                        a ->  this.map(a.getDimensionName()),
-                        a ->  this.map(a.getAttributeName())));
-        return new SolutionDto(collect);
+                        a -> this.map(a.getDimensionName()),
+                        a -> this.map(a.getAttributeName())));
+        return null;
+    }
+
+    public List<Constraint> mapConstraints(List<ConstraintDto> constraints) {
+        return null;
     }
 }

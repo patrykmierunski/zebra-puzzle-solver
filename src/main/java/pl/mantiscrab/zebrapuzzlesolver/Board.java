@@ -159,7 +159,7 @@ class Board implements Comparable<Board> {
 
         for (int i = 1; i < tableSize; i++) {
             for (int j = 1; j < tableSize; j++) {
-                table[i][j] = getConstraint(new Coordinate(axis2.getAttribute(i - 1), axis1.getAttribute(j - 1))).map(con->con.getConstraintType().toString()).orElse("");
+                table[i][j] = getConstraint(new Coordinate(axis2.getAttribute(i - 1), axis1.getAttribute(j - 1))).map(con -> con.getConstraintType().toString()).orElse("");
             }
         }
         return AsciiTable.getTable(table);

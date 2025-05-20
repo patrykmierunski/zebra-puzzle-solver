@@ -1,11 +1,11 @@
 package pl.mantiscrab.zebrapuzzlesolver.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
-public class CoordinateDto   {
-    private AttributeNameDto firstAttribute;
-    private AttributeNameDto secondAttribute;
-
-
+@Getter
+public class CoordinateDto {
+    private AttributeDto firstAttribute;
+    private AttributeDto secondAttribute;
 }

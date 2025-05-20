@@ -8,13 +8,15 @@ import pl.mantiscrab.zebrapuzzlesolver.dto.SolutionDto;
 import java.util.List;
 
 class ZebraPuzzleSolverFacade {
-    Adapter adapter = Mappers.getMapper( Adapter.class );
+    ConstraintMapper constraintMapper = Mappers.getMapper(ConstraintMapper.class);
+    DimensionMapper dimensionMapper = Mappers.getMapper(DimensionMapper.class);
+    SolutionMapper solutionMapper = Mappers.getMapper(SolutionMapper.class);
 
     List<SolutionDto> solve(List<DimensionDto> dimensions, List<ConstraintDto> constraints) {
-        ZebraPuzzleMatrix matrix = ZebraPuzzleMatrix.ofDimensions(adapter.mapDimensions(dimensions));
-        matrix.initialize(adapter.mapConstraints(constraints));
+        ZebraPuzzleMatrix matrix = ZebraPuzzleMatrix.ofDimensions(dimensionMapper.map(dimensions));
+        matrix.initialize(constraintMapper.map(constraints));
         matrix.solve();
-        return adapter.mapSolutions(matrix.getSolutions());
+        return solutionMapper.map(matrix.getSolutions());
     }
 
 }

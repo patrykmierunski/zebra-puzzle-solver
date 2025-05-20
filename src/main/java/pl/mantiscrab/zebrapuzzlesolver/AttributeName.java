@@ -1,8 +1,9 @@
 package pl.mantiscrab.zebrapuzzlesolver;
 
+
 import java.util.Objects;
 
-record AttributeName(String name) implements Comparable<AttributeName>{
+record AttributeName(String name) implements Comparable<AttributeName> {
 
     @Override
     public int compareTo(AttributeName that) {

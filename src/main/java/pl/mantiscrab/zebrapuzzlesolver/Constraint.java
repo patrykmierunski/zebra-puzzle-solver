@@ -32,10 +32,6 @@ class Constraint {
         return new Constraint(coordinate, ConstraintType.IS_NOT);
     }
 
-    ConstraintType getConstraintType() {
-        return constraintType;
-    }
-
     Coordinate getCoordinate() {
         return coordinate;
     }
@@ -68,7 +64,7 @@ class Constraint {
         return new Builder(attributeLeft, this.getConstraintType());
     }
 
-    static class Builder  {
+    static class Builder {
         private final Dimension.Attribute attribute;
         private final ConstraintType constraintType;
 

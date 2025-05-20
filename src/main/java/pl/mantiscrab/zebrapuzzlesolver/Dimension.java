@@ -3,12 +3,12 @@ package pl.mantiscrab.zebrapuzzlesolver;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Dimension implements Comparable<Dimension> {
+class Dimension implements Comparable<Dimension> {
 
     private final DimensionName name;
     private final Set<Attribute> attributes;
 
-    protected Dimension(DimensionName name, Set<Attribute> attributes) {
+    private Dimension(DimensionName name, Set<Attribute> attributes) {
         this.name = Objects.requireNonNull(name);
         this.attributes = Collections.unmodifiableSet(attributes);
     }
@@ -40,27 +40,37 @@ public class Dimension implements Comparable<Dimension> {
         return this.getName().compareTo(that.getName());
     }
 
-    static Dimension.Builder builder() {
+    public static Dimension.Builder builder() {
         return new Dimension.Builder();
     }
 
     public static class Builder {
         private DimensionName name;
-        private String[] attributeNames;
+        private AttributeName[] attributeNames;
 
         public Builder name(String name) {
             this.name = DimensionName.of(name);
             return this;
         }
 
+        public Builder name(DimensionName name) {
+            this.name = name;
+            return this;
+        }
+
         public Builder attributes(String... attributeNames) {
-            this.attributeNames = attributeNames;
+            this.attributeNames = Arrays.stream(attributeNames).map(AttributeName::new).toArray(AttributeName[]::new);
+            return this;
+        }
+
+        public Builder attributes(List<AttributeName> attributeNames) {
+            this.attributeNames = attributeNames.toArray(AttributeName[]::new);
             return this;
         }
 
         public Dimension build() {
             TreeSet<Attribute> attributes = Arrays.stream(attributeNames)
-                    .map(s -> new Attribute(this.name, new AttributeName(s)))
+                    .map(s -> new Attribute(this.name, s))
                     .collect(Collectors.toCollection(TreeSet::new));
             Set<Attribute> attributeNamesUnmodifiableSet = Collections.unmodifiableSet(attributes);
             return new Dimension(this.name, attributeNamesUnmodifiableSet);
@@ -77,11 +87,11 @@ public class Dimension implements Comparable<Dimension> {
             this.attributeName = attributeName;
         }
 
-        DimensionName getDimensionName() {
+        public DimensionName getDimensionName() {
             return dimensionName;
         }
 
-        AttributeName getAttributeName() {
+        public AttributeName getAttributeName() {
             return attributeName;
         }
 

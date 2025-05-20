@@ -5,7 +5,8 @@
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                   targetNamespace="http://zebra-puzzle-solver.mantiscrab.pl/api/">
 
-    <wsdl:import location="types/ZebraPuzzleSolverSchema.xsd" namespace="http://zebra-puzzle-solver.mantiscrab.pl/types"/>
+    <wsdl:import location="types/ZebraPuzzleSolverSchema.xsd"
+                 namespace="http://zebra-puzzle-solver.mantiscrab.pl/types"/>
 
     <wsdl:message name="SolveZebraPuzzleRequest">
         <wsdl:part name="SolveZebraPuzzleRequest" element="dom:solveZebraPuzzleRequest"/>

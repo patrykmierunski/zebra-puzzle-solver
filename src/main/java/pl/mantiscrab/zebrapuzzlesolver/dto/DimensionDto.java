@@ -16,7 +16,11 @@ public class DimensionDto {
         this.attributeNames = attributeNames.stream().map(AttributeNameDto::new).toList();
     }
 
-    public AttributeNameDto attribute(String name) {
-        return attributeNames.stream().filter(aN -> aN.getAttributeName().equals(name)).findFirst().orElseThrow();
+    public AttributeDto attribute(String name) {
+        return attributeNames.stream()
+                .filter(aN -> aN.getAttributeName().equals(name))
+                .map(a -> new AttributeDto(dimensionName, a))
+                .findFirst()
+                .orElseThrow();
     }
 }

@@ -1,9 +1,12 @@
 package pl.mantiscrab.zebrapuzzlesolver;
 
+import lombok.Getter;
+
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+@Getter
 class Solution {
     private final Set<Dimension.Attribute> attributes;
 
@@ -13,10 +16,6 @@ class Solution {
 
     static Solution of(Set<Dimension.Attribute> attributes) {
         return new Solution(attributes);
-    }
-
-    public Set<Dimension.Attribute> getAttributes() {
-        return attributes;
     }
 
     @Override

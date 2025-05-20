@@ -19,17 +19,16 @@ class BoardTest {
         board.updateWithConstraint(adamIsAttic);
 
         //then
-        Assertions.assertEquals(ConstraintType.IS, board.getConstraint(new Coordinate(dim1.attribute("Adam"), dim2.attribute("Attic"))).get().getConstraintType());
-        Assertions.assertEquals(ConstraintType.IS_NOT, board.getConstraint(new Coordinate(dim1.attribute("Adam"), dim2.attribute("Boulevard"))).get().getConstraintType());
-        Assertions.assertEquals(ConstraintType.IS_NOT, board.getConstraint(new Coordinate(dim1.attribute("Adam"), dim2.attribute("Square"))).get().getConstraintType());
-        Assertions.assertEquals(ConstraintType.IS_NOT, board.getConstraint(new Coordinate(dim1.attribute("Bobbie"), dim2.attribute("Attic"))).get().getConstraintType());
+        Assertions.assertEquals(ConstraintType.IS, board.getConstraint(new Coordinate(dim1.attribute("Adam"), dim2.attribute("Attic"))).orElseThrow().getConstraintType());
+        Assertions.assertEquals(ConstraintType.IS_NOT, board.getConstraint(new Coordinate(dim1.attribute("Adam"), dim2.attribute("Boulevard"))).orElseThrow().getConstraintType());
+        Assertions.assertEquals(ConstraintType.IS_NOT, board.getConstraint(new Coordinate(dim1.attribute("Adam"), dim2.attribute("Square"))).orElseThrow().getConstraintType());
+        Assertions.assertEquals(ConstraintType.IS_NOT, board.getConstraint(new Coordinate(dim1.attribute("Bobbie"), dim2.attribute("Attic"))).orElseThrow().getConstraintType());
         Assertions.assertTrue(board.getConstraint(new Coordinate(dim1.attribute("Bobbie"), dim2.attribute("Boulevard"))).isEmpty());
         Assertions.assertTrue(board.getConstraint(new Coordinate(dim1.attribute("Bobbie"), dim2.attribute("Square"))).isEmpty());
-        Assertions.assertEquals(ConstraintType.IS_NOT, board.getConstraint(new Coordinate(dim1.attribute("Celine"), dim2.attribute("Attic"))).get().getConstraintType());
+        Assertions.assertEquals(ConstraintType.IS_NOT, board.getConstraint(new Coordinate(dim1.attribute("Celine"), dim2.attribute("Attic"))).orElseThrow().getConstraintType());
         Assertions.assertTrue(board.getConstraint(new Coordinate(dim1.attribute("Celine"), dim2.attribute("Boulevard"))).isEmpty());
         Assertions.assertTrue(board.getConstraint(new Coordinate(dim1.attribute("Celine"), dim2.attribute("Square"))).isEmpty());
     }
-
 
 
     @Test
