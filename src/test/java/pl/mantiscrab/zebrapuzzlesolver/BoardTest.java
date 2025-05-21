@@ -47,7 +47,6 @@ class BoardTest {
         board.updateWithConstraint(bobbieIsNotSquare);
 
         //then
-        System.out.println(board);
         Assertions.assertEquals(ConstraintType.IS, board.getForCoordinate(new Coordinate(dim1.attribute("Adam"), dim2.attribute("Attic"))));
         Assertions.assertEquals(ConstraintType.IS_NOT, board.getForCoordinate(new Coordinate(dim1.attribute("Adam"), dim2.attribute("Boulevard"))));
         Assertions.assertEquals(ConstraintType.IS_NOT, board.getForCoordinate(new Coordinate(dim1.attribute("Adam"), dim2.attribute("Square"))));
