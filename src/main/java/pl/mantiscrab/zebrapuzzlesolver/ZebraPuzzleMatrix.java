@@ -88,7 +88,7 @@ class ZebraPuzzleMatrix {
 
     private List<Constraint> getIsConstraintsForAttribute(Dimension.Attribute attribute) {
         return new ArrayList<>(getConstraintStream(attribute)
-                .filter(constraint -> constraint.getConstraintType().equals(ConstraintType.IS))
+                .filter(constraint -> constraint.constraintType().equals(ConstraintType.IS))
                 .toList());
     }
 

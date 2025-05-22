@@ -1,5 +1,6 @@
 package pl.mantiscrab.zebrapuzzlesolver;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -10,8 +11,8 @@ class Coordinate implements Comparable<Coordinate> {
     Coordinate(Dimension.Attribute firstAttribute, Dimension.Attribute secondAttribute) {
         if (firstAttribute == null || secondAttribute == null)
             throw new NullPointerException();
-        if (firstAttribute.getDimensionName().equals(secondAttribute.getDimensionName()))
-            throw new IllegalArgumentException(String.format("Attributes cannot within same dimension{%s}", firstAttribute.getDimensionName()));
+        if (firstAttribute.dimensionName().equals(secondAttribute.dimensionName()))
+            throw new IllegalArgumentException(String.format("Attributes cannot within same dimension{%s}", firstAttribute.dimensionName()));
         this.attributes = Stream.of(firstAttribute, secondAttribute).sorted().toList();
     }
 
@@ -23,8 +24,8 @@ class Coordinate implements Comparable<Coordinate> {
         if (name1.equals(name2)) {
             throw new IllegalArgumentException("Dimensions cannot be the same");
         }
-        List<DimensionName> dimensionNames = attributes.stream().map(Dimension.Attribute::getDimensionName).toList();
-        return dimensionNames.containsAll(List.of(name1, name2));
+        List<DimensionName> dimensionNames = attributes.stream().map(Dimension.Attribute::dimensionName).toList();
+        return new HashSet<>(dimensionNames).containsAll(List.of(name1, name2));
     }
 
     List<Dimension.Attribute> getAttributes() {

@@ -23,7 +23,7 @@ class Dimension implements Comparable<Dimension> {
 
     Attribute attribute(String attributeName) {
         return attributes.stream().filter(
-                a -> a.getAttributeName().name().equals(attributeName)).findFirst().orElseThrow(() ->
+                a -> a.attributeName().name().equals(attributeName)).findFirst().orElseThrow(() ->
                 new RuntimeException(String.format("Dimension %s doesn't contain attribute %s", this.name.name(), attributeName)));
     }
 
@@ -77,23 +77,7 @@ class Dimension implements Comparable<Dimension> {
         }
     }
 
-    static class Attribute implements Comparable<Attribute> {
-
-        private final DimensionName dimensionName;
-        private final AttributeName attributeName;
-
-        Attribute(DimensionName dimensionName, AttributeName attributeName) {
-            this.dimensionName = dimensionName;
-            this.attributeName = attributeName;
-        }
-
-        public DimensionName getDimensionName() {
-            return dimensionName;
-        }
-
-        public AttributeName getAttributeName() {
-            return attributeName;
-        }
+    record Attribute(DimensionName dimensionName, AttributeName attributeName) implements Comparable<Attribute> {
 
         Constraint is(Attribute otherAttribute) {
             return Constraint.is(this, otherAttribute);
@@ -105,24 +89,11 @@ class Dimension implements Comparable<Dimension> {
 
         @Override
         public int compareTo(Attribute attribute) {
-            int dimensionNameComparisonResult = this.getDimensionName().compareTo(attribute.getDimensionName());
+            int dimensionNameComparisonResult = this.dimensionName().compareTo(attribute.dimensionName());
             if (dimensionNameComparisonResult == 0) {
-                return this.getAttributeName().name().compareTo(attribute.getAttributeName().name());
+                return this.attributeName().name().compareTo(attribute.attributeName().name());
             }
             return dimensionNameComparisonResult;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Attribute attribute = (Attribute) o;
-            return Objects.equals(dimensionName, attribute.dimensionName) && Objects.equals(attributeName, attribute.attributeName);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(dimensionName, attributeName);
         }
 
         @Override

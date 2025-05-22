@@ -1,20 +1,10 @@
 package pl.mantiscrab.zebrapuzzlesolver;
 
-import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Getter
-class Constraint {
-    private final Coordinate coordinate;
-    private final ConstraintType constraintType;
-
-    Constraint(Coordinate coordinate, ConstraintType constraintType) {
-        this.coordinate = coordinate;
-        this.constraintType = constraintType;
-    }
+record Constraint(Coordinate coordinate, ConstraintType constraintType) {
 
     static Constraint is(Dimension.Attribute attribute1, Dimension.Attribute attribute2) {
         return Constraint.is(new Coordinate(attribute1, attribute2));
@@ -30,10 +20,6 @@ class Constraint {
 
     static Constraint isNot(Coordinate coordinate) {
         return new Constraint(coordinate, ConstraintType.IS_NOT);
-    }
-
-    Coordinate getCoordinate() {
-        return coordinate;
     }
 
     Dimension.Attribute getFirstAttribute() {
@@ -52,16 +38,11 @@ class Constraint {
         return Objects.equals(coordinate, that.coordinate) && constraintType == that.constraintType;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(coordinate, constraintType);
-    }
-
     Builder replaceAttribute(Dimension.Attribute toBeReplaced) {
         List<Dimension.Attribute> attributes = new ArrayList<>(coordinate.getAttributes());
         attributes.remove(toBeReplaced);
         Dimension.Attribute attributeLeft = attributes.getFirst();
-        return new Builder(attributeLeft, this.getConstraintType());
+        return new Builder(attributeLeft, this.constraintType());
     }
 
     static class Builder {

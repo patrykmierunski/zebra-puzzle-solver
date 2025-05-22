@@ -18,8 +18,8 @@ class AttributeMapperTest {
         //given-when
         Dimension.Attribute attribute = mapper.map(new AttributeDto(new DimensionNameDto(dimensionName), new AttributeNameDto(this.attributeName)));
         //then
-        Assertions.assertThat(attribute.getAttributeName().name()).isEqualTo(attributeName);
-        Assertions.assertThat(attribute.getDimensionName().name()).isEqualTo(dimensionName);
+        Assertions.assertThat(attribute.attributeName().name()).isEqualTo(attributeName);
+        Assertions.assertThat(attribute.dimensionName().name()).isEqualTo(dimensionName);
     }
 
     @Test
