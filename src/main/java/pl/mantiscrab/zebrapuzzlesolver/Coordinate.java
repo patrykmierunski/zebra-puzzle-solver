@@ -1,5 +1,6 @@
 package pl.mantiscrab.zebrapuzzlesolver;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -7,12 +8,12 @@ import java.util.stream.Stream;
 class Coordinate implements Comparable<Coordinate> {
     private final List<Dimension.Attribute> attributes;
 
-    Coordinate(Dimension.Attribute attribute1, Dimension.Attribute attribute2) {
-        if (attribute1 == null || attribute2 == null)
+    Coordinate(Dimension.Attribute firstAttribute, Dimension.Attribute secondAttribute) {
+        if (firstAttribute == null || secondAttribute == null)
             throw new NullPointerException();
-        if(attribute1.getDimensionName().equals(attribute2.getDimensionName()))
-            throw new IllegalArgumentException(String.format("Attributes cannot within same dimension{%s}", attribute1.getDimensionName()));
-        this.attributes = Stream.of(attribute1, attribute2).sorted().toList();
+        if (firstAttribute.dimensionName().equals(secondAttribute.dimensionName()))
+            throw new IllegalArgumentException(String.format("Attributes cannot within same dimension{%s}", firstAttribute.dimensionName()));
+        this.attributes = Stream.of(firstAttribute, secondAttribute).sorted().toList();
     }
 
     boolean contains(Dimension.Attribute attribute1) {
@@ -23,8 +24,8 @@ class Coordinate implements Comparable<Coordinate> {
         if (name1.equals(name2)) {
             throw new IllegalArgumentException("Dimensions cannot be the same");
         }
-        List<DimensionName> dimensionNames = attributes.stream().map(Dimension.Attribute::getDimensionName).toList();
-        return dimensionNames.containsAll(List.of(name1, name2));
+        List<DimensionName> dimensionNames = attributes.stream().map(Dimension.Attribute::dimensionName).toList();
+        return new HashSet<>(dimensionNames).containsAll(List.of(name1, name2));
     }
 
     List<Dimension.Attribute> getAttributes() {

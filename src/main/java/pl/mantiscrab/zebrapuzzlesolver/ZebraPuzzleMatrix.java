@@ -33,16 +33,16 @@ class ZebraPuzzleMatrix {
 
     void solve() {
         boolean wasUpdated;
-         do {
-             int before = getTotalNumberOfConstraints();
+        do {
+            int before = getTotalNumberOfConstraints();
 
-             List<Constraint> isConstraints = boards.stream().flatMap(Board::getIsConstraints).toList();
-             isConstraints.forEach(this::synchronize);
+            List<Constraint> isConstraints = boards.stream().flatMap(Board::getIsConstraints).toList();
+            isConstraints.forEach(this::synchronize);
 
-             int after = getTotalNumberOfConstraints();
+            int after = getTotalNumberOfConstraints();
 
-             wasUpdated = before != after;
-         } while (wasUpdated);
+            wasUpdated = before != after;
+        } while (wasUpdated);
     }
 
     private Board getFieldForConstraint(Constraint constraint) {
@@ -88,7 +88,7 @@ class ZebraPuzzleMatrix {
 
     private List<Constraint> getIsConstraintsForAttribute(Dimension.Attribute attribute) {
         return new ArrayList<>(getConstraintStream(attribute)
-                .filter(constraint -> constraint.getConstraintType().equals(ConstraintType.IS))
+                .filter(constraint -> constraint.constraintType().equals(ConstraintType.IS))
                 .toList());
     }
 

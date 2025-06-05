@@ -4,10 +4,8 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-class Solution {
-    private final Set<Dimension.Attribute> attributes;
-
-    private Solution(Set<Dimension.Attribute> attributes) {
+record Solution(Set<Dimension.Attribute> attributes) {
+    Solution(Set<Dimension.Attribute> attributes) {
         this.attributes = Collections.unmodifiableSet(attributes);
     }
 
@@ -21,11 +19,6 @@ class Solution {
         if (o == null || getClass() != o.getClass()) return false;
         Solution solution = (Solution) o;
         return Objects.equals(attributes, solution.attributes);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(attributes);
     }
 
     @Override

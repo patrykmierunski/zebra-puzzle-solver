@@ -1,10 +1,14 @@
 package pl.mantiscrab.zebrapuzzlesolver;
 
+
 import java.util.Objects;
 
-record DimensionName(String name) implements Comparable<DimensionName>{
+record DimensionName(String name) implements Comparable<DimensionName> {
 
     static DimensionName of(String dimensionName) {
+        if (dimensionName.isBlank()) {
+            throw new IllegalArgumentException("dimensionName cannot be blank");
+        }
         return new DimensionName(dimensionName);
     }
 

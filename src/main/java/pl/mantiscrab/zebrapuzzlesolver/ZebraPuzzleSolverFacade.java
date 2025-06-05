@@ -7,12 +7,13 @@ import pl.mantiscrab.zebrapuzzlesolver.dto.SolutionDto;
 import java.util.List;
 
 class ZebraPuzzleSolverFacade {
-    static List<SolutionDto> solve(List<DimensionDto> dimensions, List<ConstraintDto> constraints) {
-//        ZebraPuzzleMatrix matrix = ZebraPuzzleMatrix.ofDimensions(dimensions);
-//        matrix.initialize(constraints);
-//        matrix.solve();
-//        return matrix.getSolutions();
-        return null;
+    Mapper mapper = new Mapper();
+
+    List<SolutionDto> solve(List<DimensionDto> dimensions, List<ConstraintDto> constraints) {
+        ZebraPuzzleMatrix matrix = ZebraPuzzleMatrix.ofDimensions(mapper.mapDimensions(dimensions));
+        matrix.initialize(mapper.mapConstraints(constraints));
+        matrix.solve();
+        return mapper.mapSolutions(matrix.getSolutions());
     }
 
 }

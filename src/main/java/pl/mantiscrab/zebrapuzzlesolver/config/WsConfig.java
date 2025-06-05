@@ -1,7 +1,7 @@
 package pl.mantiscrab.zebrapuzzlesolver.config;
 
-import org.apache.cxf.Bus;
 import jakarta.xml.ws.Endpoint;
+import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

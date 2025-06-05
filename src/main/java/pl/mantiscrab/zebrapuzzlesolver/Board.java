@@ -42,7 +42,7 @@ class Board implements Comparable<Board> {
     }
 
     boolean isEligibleForConstraint(Constraint constraint) {
-        Coordinate coordinate = constraint.getCoordinate();
+        Coordinate coordinate = constraint.coordinate();
         return coordinates.contains(coordinate);
     }
 
@@ -56,22 +56,22 @@ class Board implements Comparable<Board> {
 
     private void addConstraint(Constraint constraint) {
         addConstraintRaw(constraint);
-        if (constraint.getConstraintType().equals(ConstraintType.IS)) {
-            updateForIsConstraint(constraint.getCoordinate());
+        if (constraint.constraintType().equals(ConstraintType.IS)) {
+            updateForIsConstraint(constraint.coordinate());
         }
     }
 
     private void addConstraintRaw(Constraint constraint) {
-        Coordinate constraintCoordinate = constraint.getCoordinate();
+        Coordinate constraintCoordinate = constraint.coordinate();
         Optional<Constraint> existingConstraint = getConstraint(constraintCoordinate);
-        if (existingConstraint.isPresent() && !existingConstraint.get().getConstraintType().equals(constraint.getConstraintType())) {
+        if (existingConstraint.isPresent() && !existingConstraint.get().constraintType().equals(constraint.constraintType())) {
             throw new IllegalArgumentException("constraint already exists");
         }
         constraints.add(constraint);
     }
 
     Optional<Constraint> getConstraint(Coordinate coordinate) {
-        return constraints.stream().filter(constraint -> constraint.getCoordinate().equals(coordinate)).findFirst();
+        return constraints.stream().filter(constraint -> constraint.coordinate().equals(coordinate)).findFirst();
     }
 
     private void updateForIsConstraint(Coordinate coordinate) {
@@ -96,7 +96,7 @@ class Board implements Comparable<Board> {
                     .filter(coord -> coord.contains(attribute))
                     .toList();
             List<Coordinate> coordinatesOfExistingConstraintsForAttribute = this.constraints.stream()
-                    .map(Constraint::getCoordinate)
+                    .map(Constraint::coordinate)
                     .filter(coord -> coord.contains(attribute))
                     .toList();
             List<Coordinate> coordinatesWithoutConstraint = new ArrayList<>(possibleCoordinatesForAttribute);
@@ -115,7 +115,7 @@ class Board implements Comparable<Board> {
     }
 
     ConstraintType getForCoordinate(Coordinate coordinate) {
-        return getConstraint(coordinate).orElseThrow().getConstraintType();
+        return getConstraint(coordinate).orElseThrow().constraintType();
     }
 
     @Override
@@ -159,18 +159,18 @@ class Board implements Comparable<Board> {
 
         for (int i = 1; i < tableSize; i++) {
             for (int j = 1; j < tableSize; j++) {
-                table[i][j] = getConstraint(new Coordinate(axis2.getAttribute(i - 1), axis1.getAttribute(j - 1))).map(con->con.getConstraintType().toString()).orElse("");
+                table[i][j] = getConstraint(new Coordinate(axis2.getAttribute(i - 1), axis1.getAttribute(j - 1))).map(con -> con.constraintType().toString()).orElse("");
             }
         }
         return AsciiTable.getTable(table);
     }
 
     Stream<Constraint> getIsConstraints() {
-        return constraints.stream().filter(con -> con.getConstraintType().equals(ConstraintType.IS));
+        return constraints.stream().filter(con -> con.constraintType().equals(ConstraintType.IS));
     }
 
     List<Constraint> getConstraints(Dimension.Attribute attribute) {
-        return constraints.stream().filter(con -> con.getCoordinate().contains(attribute)).collect(Collectors.toList());
+        return constraints.stream().filter(con -> con.coordinate().contains(attribute)).collect(Collectors.toList());
     }
 
     List<Constraint> getConstraints() {
@@ -178,7 +178,7 @@ class Board implements Comparable<Board> {
     }
 
     boolean containAttribute(Dimension.Attribute attribute) {
-        DimensionName attributeDimensionName = attribute.getDimensionName();
+        DimensionName attributeDimensionName = attribute.dimensionName();
         return axis1.getName().equals(attributeDimensionName)
                 || axis2.getName().equals(attributeDimensionName);
     }
