@@ -1,10 +1,24 @@
 .container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: repeat(5, 1fr);
-    gap: 20px;
+    grid-template-rows: repeat(10, 1fr);
 }
 
 .full-width {
-    grid-column: 1 / -1;
+    grid-column: 1/-1;
+    justify-self: center;
+}
+
+.centered {
+    justify-self: center;
+    text-align: center;
+}
+
+.author-text {
+    grid-column: 1/3;
+    justify-self: left;
+}
+
+.author {
+    justify-self: stretch;
 }
