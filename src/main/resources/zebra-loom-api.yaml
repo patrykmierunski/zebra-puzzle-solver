@@ -1,0 +1,112 @@
+openapi: 3.1.0
+info:
+  title: ZebraLoomApi
+  version: 0.0.1-SNAPSHOT
+servers:
+  - url: 'https'
+
+paths:
+  /zebraPuzzle:
+    post:
+      summary: Solve Zebra Puzzle
+      operationId: solveZebraPuzzle
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SolveRequest'
+            example:
+
+      responses:
+        '201':
+          description: Employee created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Solutions'
+        '400':
+          description: Invalid input
+
+components:
+  schemas:
+    SolveRequest:
+      type: object
+      required: [ dimensions, constraints ]
+      properties:
+        dimensions:
+          $ref: '#/components/schemas/Dimensions'
+        constraints:
+          type: array
+          items:
+            $ref: '#/components/schemas/Constraint'
+
+    Dimensions:
+      type: object
+      properties:
+        dimensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dimension'
+            minItems: 3
+            uniqueItems: true
+      required:
+        - dimensions
+
+    Dimension:
+      type: object
+      properties:
+        name:
+          type: string
+        attributes:
+          type: array
+          items:
+            type: string
+            # effectively not working with
+            # <artifactId>openapi-generator-maven-plugin</artifactId>
+            minItems: 2
+            uniqueItems: true
+      required: [ name, attributes ]
+
+    Constraint:
+      type: object
+      required: [ coordinate, isConstraint ]
+      properties:
+        coordinate:
+          $ref: '#/components/schemas/Coordinate'
+        isConstraint:
+          type: boolean
+
+    Coordinate:
+      type: object
+      required: [ attribute1, attribute2 ]
+      properties:
+        attribute1:
+          $ref: '#/components/schemas/Attribute'
+        attribute2:
+          $ref: '#/components/schemas/Attribute'
+
+    Attribute:
+      type: object
+      required: [ attributeName, dimensionName ]
+      properties:
+        attributeName:
+          type: string
+        dimensionName:
+          type: string
+
+    Solutions:
+      type: object
+      properties:
+        solutions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Solution'
+
+    Solution:
+      type: object
+      properties:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'

@@ -61,7 +61,6 @@ abstract class ConstraintMapper {
 
 @org.mapstruct.Mapper(uses = {pl.mantiscrab.zebrapuzzlesolver.AttributeMapper.class})
 abstract class SolutionMapper {
-    @Mapping(target = "solution", source = "attributes")
     abstract SolutionDto map(Solution solutionDto);
 
     abstract List<SolutionDto> map(List<Solution> solutionDtos);
